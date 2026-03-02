@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT 10 - All-in-One</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <!--Under this text is the styling stuff. We asked ai and w3schools to help us figure out how to  use the codes properly and decorate it.-->
+    <style>
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 40px;
+            margin-top: 1px;
+            color: #6A7E3F;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.squarespace-cdn.com/content/v1/664c7ae50eea9c731b37e817/96660b45-6516-4fad-a7e0-7a9b929cc1d2/O.B+Montessori+Center%2C+Basketball+Intramurals?format=1000w');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            padding: 8px 15px;
+            margin-left: 10px;
+            border-radius: 20px;
+            color: black;
+            font-weight: bold;
+        }
+
+        a.btn-signup { 
+            background-color: #6A7E3F; 
+            color: white; 
+        }
+
+        a.btn-checker { 
+            background-color: #6A7E3F;
+            color: white; 
+        }
+        
+        a.btn-players { 
+            background-color: #6A7E3F;
+            color: white; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 50px; /* Space between the two cards */
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            color: black;
+        }
+
+        button {
+            width: 85%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #ff5f6d, #ffc371, #84fab0);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .result-box { margin-top: 20px; font-weight: bold; min-height: 25px; }
+        
+        #player_list_area {
+            text-align: left;
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <div class="logo">
+            <h2>Intramurals SY 2025-2026</h2>
+            <p style="font-size: 20px">Go, Grow, Glow Green Hornets 💚</p>
+
+        </div>
+        <div class="nav-links">
+            <a href="#account_Create" class="btn-signup">Sign Up</a>
+            <a href="#eligibility_Check" class="btn-checker">Check Eligibility</a>
+            <a href="#players_List" class="btn-players">List of Players</a>
+        </div>
+    </nav>
+
+    <!--This part is where we basically put what will show up on the website and the ids that will be called in the main.py file (the codes here are from our sw 2 and skills test)-->
+
+    <div class="card" id="account_Create">
+        <h1>Create Account</h1>
+        <input type="text" id="user_name" placeholder="Enter Username">
+        <input type="password" id="pass_code" placeholder="Enter Password">
+        <button py-click="check_account">Sign Up!</button>
+        <div id="account_result" class="result-box"></div>
+    </div>
+
+    <div class="card" id="eligibility_Check">
+        <h1>Intramurals Eligibility</h1>
+        <div style="text-align: left; width: 80%; margin: 10px auto;">
+            <p>Online Registration?</p>
+            <input type="radio" name="reg" id="reg_yes"> Yes 
+            <input type="radio" name="reg" id="reg_no"> No
+            <br><br>
+            <p>Medical Clearance?</p>
+            <input type="radio" name="med" id="med_yes"> Yes 
+            <input type="radio" name="med" id="med_no"> No
+        </div>
+
+        <input type="number" id="grade_lvl" placeholder="Grade Level (7-10)">
+        <input type="text" id="section" placeholder="Section">
+        
+        <button py-click="check_eligibility">Submit & Check Team</button>
+
+        <div id="elig_result" class="result-box"></div>
+
+        <div id="player_list_area">
+            <h3 id="list_title"></h3>
+            <div id="names_display"></div>
+        </div>
+    </div>
+
+    <br><br>
+
+    
+    <div class="card" id="players_List">
+            <h2>Intramurals Players of Green Hornets Grade 10</h2>
+            
+            <button id="run-btn" py-click="display_players">Get the list!</button>
+            
+            <div id="output"></div>
+        </div>
+    </div>
+
+     <!-- This section contains the file for the fonts -->
+            <div class="fonts">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Parkinsans:wght@300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Caveat&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Parkinsans:wght@300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+	        </div>
+
+    <script type="py" src="main.py"></script>
+</body>
+</html>
